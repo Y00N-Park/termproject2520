@@ -1,7 +1,7 @@
 November 3rd (First Sprint Complete)
 
 SJ Park:
-I worked on the following tasks:
+I worked on the following task:
 1. Edit a reminder
 
 I did research on google to update the object in array 
