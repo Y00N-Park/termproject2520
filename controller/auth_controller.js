@@ -1,6 +1,7 @@
-let database = require("../database");
+let database = require("../database").Database;
 const express = require("express");
 const passport = require("../middleware/passport");
+const github = require("../middleware/github")
 
 const { forwardAuthenticated } = require("../middleware/checkauth");
 
@@ -25,14 +26,32 @@ let authController = {
 
   registerSubmit: (req, res) => {
     // implement
-    database.push({
-      id : Database.length + 1,
+    console.log(req.body)
+    let userdata = {
+      id : database.length + 1,
         email : req.body.email,
         password : req.body.password,
         reminders : []
   
-    })
-    (req, res)
+    }; 
+    database.push(userdata);
+   
+    (req, res);
+  },
+
+  github : (req,res) => {
+    res.render("/github",  github.authenticate('github'))
+    
+  },
+
+  githubcallback: (req,res) => {
+  res.render('/github/callback', 
+  github.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/reminders');
+
+  });
+
   }
 }
 

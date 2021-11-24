@@ -4,8 +4,8 @@ const userController = require("./userController")
 
 let remindersController = {
   list: (req, res) => {
-    console.log(req.user.id)
-    console.log(req.user)
+    
+    
     res.render("reminder/index", { reminders: userController.getUserById(req.user.id).reminders });
   },
 
@@ -15,64 +15,65 @@ let remindersController = {
 
   listOne: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = database[req.user].reminders.find(function (reminder) {
+    let searchResult = userController.getUserById(req.user.id).reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
     if (searchResult != undefined) {
       res.render("reminder/single-reminder", { reminderItem: searchResult });
     } else {
-      res.render("reminder/index", { reminders: database[req.user].reminders });
+      res.render("reminder/index", { reminders: userController.getUserById(req.user.id).reminders });
     }
   },
 
   create: (req, res) => {
     let reminder = {
-      id: database[req.user].reminders.length + 1,
+      id: userController.getUserById(req.user.id).reminders.length + 1,
       title: req.body.title,
       description: req.body.description,
       completed: false,
     };
-    database[req.user].reminders.push(reminder);
+    userController.getUserById(req.user.id).reminders.push(reminder);
     res.redirect("/reminders");
   },
 
   edit: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = database[req.user].reminders.find(function (reminder) {
+    let searchResult =  userController.getUserById(req.user.id).reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
     res.render("reminder/edit", { reminderItem: searchResult });
   },
 
   update: (req, res) => {
-    let updatedReminder = database.cindy.reminders;
+    
     // id number 
-    let reminderToFind = req.params.id; 
-    let searchUpResult = database[req.user].reminders.findIndex(function (reminder) {
-      return reminder.id == reminderToFind;
-    });
-    updatedReminder[searchUpResult] = {
-      id: reminderToFind,
-      title: req.body.title,
-      description: req.body.description,
-      completed: req.body.completed,
-    };
+    let reminderToUpdate = req.params.id; 
+    let searchReminder = userController.getUserById(req.user.id).reminders.find(reminders => reminders.id == reminderToUpdate ) 
+     
+    searchReminder.title =  req.body.title
+    searchReminder.description = req.body.description
+    if (req.body.completed == 'true'){
+    searchReminder.completed = true
+    }
+    else{
+      searchReminder.completed = false
+
+    }
     res.redirect("/reminders");
   },
 
   delete: (req, res) => {
     // Implement this code
     let reminderIdToDelete = parseInt(req.params.id);
-    let foundReminder = database[req.user].reminders.find(function (reminder) {
-      for (i=0; i<= database[req.user].reminders.length; i+1) {
-        if (reminder.id == reminderIdToDelete);
-        return i;
-      }
-    });
-    database[req.user].reminders.splice(foundReminder, 1);
-    res.redirect("/reminders");
- 
-    
+    let searchResult = userController.getUserById(req.user.id).reminders.find(reminders => reminders.id == reminderIdToDelete )
+   	if (searchResult != undefined) {
+		let reminder_index = userController.getUserById(req.user.id).reminders.indexOf(searchResult)
+		userController.getUserById(req.user.id).reminders.splice(reminder_index, 1)
+		res.redirect("/reminders")
+  }
+  else{
+    res.render("reminder not found")
+  }
 
   }
 };
