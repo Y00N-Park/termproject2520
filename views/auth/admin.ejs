@@ -1,0 +1,15 @@
+<div>
+    <h1> Dashboard</h1>
+    <p> welcome <%user.name%> </p> <br>
+    <ul><% for ( const session in sessions) { %>
+        <li> Session ID <%= session %>
+
+        <form>
+            <button name="Revoke" value="<%= session %>" class="btn btn-primary" formmethod="post">Revoke Session</button>
+        </form>
+    <% } %>
+
+        
+        
+    </ul>
+</div>
