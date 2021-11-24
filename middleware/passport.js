@@ -2,6 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 const userController = require("../controller/userController");
 
+
 const localLogin = new LocalStrategy(
     { usernameField: 'email',
     passwordField: 'password' },
@@ -17,6 +18,7 @@ const localLogin = new LocalStrategy(
     }
 );
 
+
 passport.serializeUser(function (user, done) {    
     done(null, user.id);
 });
@@ -31,5 +33,6 @@ passport.deserializeUser(function (id, done) {
 });
 
 module.exports = passport.use(localLogin);
+
 
 
