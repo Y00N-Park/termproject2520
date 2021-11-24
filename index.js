@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const { ensureAuthenticated } = require("./middleware/checkAuth");
+const authRoute  = require("./controller/authRoute");
 const ejsLayouts = require("express-ejs-layouts");
 const reminderController = require("./controller/reminder_controller");
 const authController = require("./controller/auth_controller");
@@ -29,28 +31,35 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes start here
+app.use("/auth", authRoute);
 
-app.get("/reminders", reminderController.list);
 
-app.get("/reminder/new", reminderController.new);
+app.get("/reminders", ensureAuthenticated, reminderController.list);
 
-app.get("/reminder/:id", reminderController.listOne);
+app.get("/reminder/new", ensureAuthenticated, reminderController.new);
 
-app.get("/reminder/:id/edit", reminderController.edit);
+app.get("/reminder/:id",ensureAuthenticated, reminderController.listOne);
 
-app.post("/reminder/", reminderController.create);
+app.get("/reminder/:id/edit", ensureAuthenticated, reminderController.edit);
+
+app.post("/reminder/", ensureAuthenticated, reminderController.create);
 
 // Implement this yourself
-app.post("/reminder/update/:id", reminderController.update);
+app.post("/reminder/update/:id",ensureAuthenticated, reminderController.update);
 
 // Implement this yourself
-app.post("/reminder/delete/:id", reminderController.delete);
+app.post("/reminder/delete/:id",ensureAuthenticated, reminderController.delete);
 
+//changed this to work with express router instead
 // Fix this to work with passport! The registration does not need to work, you can use the fake database for this.
-app.get("/register", authController.register);
-app.get("/login", authController.login);
-app.post("/register", authController.registerSubmit);
-app.post("/login", authController.loginSubmit);
+//app.get("/register", authController.register);
+//app.get("/login", authController.login);
+//app.post("/register", authController.registerSubmit);
+//app.post("/login", authController.loginSubmit);
+//app.get("/github", authController.github)
+//app.get("/github/callback", authController.githubcallback)
+
+
 
 app.listen(3001, function () {
   console.log(
