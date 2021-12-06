@@ -32,7 +32,8 @@ it is sorta working now
 I had trouble implenting the uploading profile picture functionality i continue to work on it over the week
 
 **SJ**
-I worte the code of git hub login
-https://youtu.be/rGXydWH9yns <- I watched this video and it was helpful to understand passport
+
+I worte the code of git hub login. 
+https://youtu.be/rGXydWH9yns <- I watched this video and it was helpful to understand passport 
 
 I tried to upload profile picture watching D2L video.
