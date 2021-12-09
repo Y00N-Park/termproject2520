@@ -14,7 +14,7 @@ SJ park
 worked on registration and authentication
 
 Jasmeen Gill 
-Worked on login and authentication
+Worked on login and authentication the local authentication is now working
 
 nov 24
 Jasmeen
@@ -28,3 +28,8 @@ it is sorta working now
 
 I had trouble implenting the uploading profile picture functionality i continue to work on it over the week
 
+last update dec 5
+jasmeen gill
+i tried to implement prisma because of the final week could not really do it
+i reseached on https://blog.tericcabrel.com/using-prisma-orm-to-build-a-nodejs-application-with-mysql/
+and watched some videos to get help but unfortunately ran out of time to implement it
